@@ -166,7 +166,7 @@ export default function Main() {
             noWrap
             className={classes.toolbarTitle}
           >
-            Main
+            DigiCourt
           </Typography>
           <IconButton>
             <SearchIcon />
