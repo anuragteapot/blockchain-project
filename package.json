@@ -14,6 +14,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^4.6.0",
+    "@material-ui/icons": "^4.5.1",
+    "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
@@ -21,18 +24,17 @@
     "guid": "0.0.12",
     "helmet": "^3.12.0",
     "jsonwebtoken": "^8.2.1",
+    "markdown-to-jsx": "^6.10.3",
     "moment": "^2.22.0",
     "mongoose": "^5.0.14",
     "mongoose-unique-validator": "^2.0.0",
     "nodemailer": "^4.6.4",
-    "validator": "^9.4.1",
-    "@material-ui/core": "^4.6.0",
-    "@material-ui/icons": "^4.5.1",
-    "markdown-to-jsx": "^6.10.3",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "underscore": "^1.9.1",
+    "validator": "^9.4.1"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -12,6 +12,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import api from './../api';
+
+let email = null;
+let password = null;
 
 function Copyright() {
   return (
@@ -24,6 +28,12 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+async function submit(event) {
+  event.preventDefault();
+  const token = await api.LOGIN(email, password);
+  localStorage.setItem('$accessToken', token.data.token);
 }
 
 const useStyles = makeStyles(theme => ({
@@ -64,13 +74,16 @@ export default function SignIn() {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}  onSubmit={submit}>
           <TextField
             variant='outlined'
             margin='normal'
             required
             fullWidth
             id='email'
+            onChange={event => {
+              email = event.target.value;
+            }}
             label='Email Address'
             name='email'
             autoComplete='email'
@@ -84,6 +97,9 @@ export default function SignIn() {
             name='password'
             label='Password'
             type='password'
+            onChange={event => {
+              password = event.target.value;
+            }}
             id='password'
             autoComplete='current-password'
           />
@@ -102,12 +118,12 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href='#' variant='body2'>
+              <Link href='/forgot' variant='body2'>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link href='/signup' variant='body2'>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

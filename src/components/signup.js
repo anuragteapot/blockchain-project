@@ -12,6 +12,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import api from './../api';
+
+let email = null;
+let age = null;
+let password = null;
+let name = null;
 
 function Copyright() {
   return (
@@ -24,6 +30,11 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+async function submit(event) {
+  event.preventDefault();
+  await api.SIGNUP(email, password, age, name);
 }
 
 const useStyles = makeStyles(theme => ({
@@ -64,29 +75,21 @@ export default function SignUp() {
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={submit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete='fname'
-                name='firstName'
+                name='fullName'
                 variant='outlined'
                 required
                 fullWidth
-                id='firstName'
-                label='First Name'
+                onChange={event => {
+                  name = event.target.value;
+                }}
+                id='fullName'
+                label='Full Name'
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant='outlined'
-                required
-                fullWidth
-                id='lastName'
-                label='Last Name'
-                name='lastName'
-                autoComplete='lname'
               />
             </Grid>
             <Grid item xs={12}>
@@ -95,6 +98,9 @@ export default function SignUp() {
                 required
                 fullWidth
                 id='email'
+                onChange={event => {
+                  email = event.target.value;
+                }}
                 label='Email Address'
                 name='email'
                 autoComplete='email'
@@ -107,17 +113,35 @@ export default function SignUp() {
                 fullWidth
                 name='password'
                 label='Password'
+                onChange={event => {
+                  password = event.target.value;
+                }}
                 type='password'
                 id='password'
                 autoComplete='current-password'
               />
             </Grid>
             <Grid item xs={12}>
+              <TextField
+                variant='outlined'
+                required
+                fullWidth
+                name='age'
+                label='Age'
+                onChange={event => {
+                  age = event.target.value;
+                }}
+                type='number'
+                id='age'
+                autoComplete='age'
+              />
+            </Grid>
+            {/* <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value='allowExtraEmails' color='primary' />}
                 label='I want to receive inspiration, marketing promotions and updates via email.'
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Button
             type='submit'
@@ -130,7 +154,7 @@ export default function SignUp() {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link href='#' variant='body2'>
+              <Link href='/signin' variant='body2'>
                 Already have an account? Sign in
               </Link>
             </Grid>
