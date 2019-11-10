@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,6 +18,8 @@ import Divider from '@material-ui/core/Divider';
 import Container from '@material-ui/core/Container';
 import Markdown from './Markdown';
 import { NavLink } from 'react-router-dom';
+import { UserContext } from './../context/userContext';
+
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
@@ -151,13 +153,14 @@ const social = ['GitHub', 'Twitter', 'Facebook'];
 
 export default function Main() {
   const classes = useStyles();
+  const user = useContext(UserContext);
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth='lg'>
         <Toolbar className={classes.toolbar}>
-          <Button size='small'>Subscribe</Button>
+          <Button size='small'>{user.name}</Button>
           <Typography
             component='h2'
             variant='h5'
@@ -171,17 +174,32 @@ export default function Main() {
           <IconButton>
             <SearchIcon />
           </IconButton>
-          <NavLink exact activeClassName='active' to='/signin'>
-            <Button variant='outlined' size='small'>
-              Sign in
-            </Button>
-          </NavLink>
+          {!user.name ? (
+            <NavLink exact activeClassName='active' to='/signin'>
+              <Button variant='outlined' size='small'>
+                Sign in
+              </Button>
+            </NavLink>
+          ) : (
+            ''
+          )}
           &nbsp;
-          <NavLink exact activeClassName='active' to='/signup'>
+          {!user.name ? (
+            <NavLink exact activeClassName='active' to='/signup'>
+              <Button variant='outlined' size='small'>
+                Sign up
+              </Button>
+            </NavLink>
+          ) : (
+            ''
+          )}
+          {user.name ? (
             <Button variant='outlined' size='small'>
-              Sign up
+              Logout
             </Button>
-          </NavLink>
+          ) : (
+            ''
+          )}
         </Toolbar>
         <Toolbar
           component='nav'

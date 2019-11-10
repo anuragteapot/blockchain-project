@@ -3,7 +3,7 @@ import handleError from './handleError';
 
 class Api {
   constructor() {
-    this.GET_USER('anuragvnsk@gmail.com', 'anurag');
+    // this.GET_USER('anuragvnsk@gmail.com', 'anurag');
   }
   async LOGIN(email, password) {
     try {
@@ -16,12 +16,9 @@ class Api {
     }
   }
 
-  async GET_USER(email, password) {
+  async GET_USER() {
     try {
-      return await AXIOS_API.get('/api/user', {
-        email,
-        password
-      });
+      return await AXIOS_API.get('/api/user');
     } catch (err) {
       new handleError()._handleError(err);
     }
