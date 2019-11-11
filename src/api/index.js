@@ -58,7 +58,7 @@ class Api {
     // Create a JavaScript version of the smart contract
     this.contracts.TodoList = TruffleContract(TodoList);
     // console.log(this.contracts.TodoList)
-    this.contracts.TodoList.setProvider(window.web3Provider);
+    // this.contracts.TodoList.setProvider(window.web3Provider);
 
     // Hydrate the smart contract with values from the blockchain
     // this.todoList = await this.contracts.TodoList.deployed();

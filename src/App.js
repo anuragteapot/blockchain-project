@@ -8,6 +8,7 @@ import CheckOut from './components/checkout';
 import { UserProvider } from './context/userContext';
 import api from './api';
 import SimpleSnackbar from './components/SimpleSnackbar';
+import Judge from './components/judge'
 // import NotFound from './components/notfound';
 
 class App extends Component {
@@ -35,6 +36,7 @@ class App extends Component {
               <Route path='/signin' component={SignIn} />
               <Route path='/signup' component={SignUp} />
               <Route path='/checkout' component={CheckOut} />
+              <Route path='/judge' component={Judge} />
               {/* <Route path='*'  component={NotFound} /> */}
             </div>
           </Router>
