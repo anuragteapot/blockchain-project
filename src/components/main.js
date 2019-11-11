@@ -160,7 +160,7 @@ export default function Main() {
       <CssBaseline />
       <Container maxWidth='lg'>
         <Toolbar className={classes.toolbar}>
-          <Button size='small'>{user.name}</Button>
+          <Button size='small'>{user.name ? user.name : ''}</Button>
           <Typography
             component='h2'
             variant='h5'
@@ -290,9 +290,9 @@ export default function Main() {
             ))}
           </Grid>
           {/* End sub featured posts */}
-          <Grid container spacing={5} className={classes.mainGrid}>
+          {/* <Grid container spacing={5} className={classes.mainGrid}> */}
             {/* Main content */}
-            <Grid item xs={12} md={8}>
+            {/* <Grid item xs={12} md={8}>
               <Typography variant='h6' gutterBottom>
                 From the Firehose
               </Typography>
@@ -305,10 +305,10 @@ export default function Main() {
                   {post}
                 </Markdown>
               ))}
-            </Grid>
+            </Grid> */}
             {/* End main content */}
             {/* Sidebar */}
-            <Grid item xs={12} md={4}>
+            {/* <Grid item xs={12} md={4}>
               <Paper elevation={0} className={classes.sidebarAboutBox}>
                 <Typography variant='h6' gutterBottom>
                   About
@@ -343,9 +343,9 @@ export default function Main() {
                   {network}
                 </Link>
               ))}
-            </Grid>
+            </Grid> */}
             {/* End sidebar */}
-          </Grid>
+          {/* </Grid> */}
         </main>
       </Container>
       {/* Footer */}
