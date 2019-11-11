@@ -7,6 +7,7 @@ import SignUp from './components/signup';
 import CheckOut from './components/checkout';
 import { UserProvider } from './context/userContext';
 import api from './api';
+import SimpleSnackbar from './components/SimpleSnackbar';
 // import NotFound from './components/notfound';
 
 class App extends Component {
@@ -38,6 +39,7 @@ class App extends Component {
             </div>
           </Router>
         </UserProvider>
+        <SimpleSnackbar></SimpleSnackbar>
       </div>
     );
   }
