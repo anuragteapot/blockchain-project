@@ -7,7 +7,6 @@ import TodoList from './../build/contracts/TodoList.json';
 class Api {
   constructor() {
     this.load();
-    this.web3Provider = {};
     this.contracts = {};
     this.todoList = null;
     this.accounts = [];
@@ -20,10 +19,7 @@ class Api {
     await this.loadTodoList();
   }
 
-  // https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8
   async loadWeb3() {
-    // Modern dapp browsers...
-
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       try {
@@ -36,18 +32,14 @@ class Api {
       } catch (error) {
         // User denied account access...
       }
-    }
-    // Legacy dapp browsers...
-    else if (window.web3) {
+    } else if (window.web3) {
       window.web3Provider = window.web3.currentProvider;
       window.web3 = new Web3(window.web3.currentProvider);
       // Acccounts always exposed
       window.web3.eth.sendTransaction({
         /* ... */
       });
-    }
-    // Non-dapp browsers...
-    else {
+    } else {
       console.log(
         'Non-Ethereum browser detected. You should consider trying MetaMask!'
       );
@@ -55,62 +47,32 @@ class Api {
   }
 
   async loadContract() {
-    // Create a JavaScript version of the smart contract
     this.contracts.TodoList = TruffleContract(TodoList);
-    // console.log(this.contracts.TodoList)
-    // this.contracts.TodoList.setProvider(window.web3Provider);
+    this.contracts.TodoList.setProvider(window.web3.currentProvider);
 
     // Hydrate the smart contract with values from the blockchain
-    // this.todoList = await this.contracts.TodoList.deployed();
-  }
-
-  getCurrentProvider() {
-    if (!window.web3) return 'unknown';
-
-    if (window.web3.currentProvider.isMetaMask) return 'metamask';
-
-    if (window.web3.currentProvider.isTrust) return 'trust';
-
-    if (window.web3.currentProvider.isGoWallet) return 'goWallet';
-
-    if (window.web3.currentProvider.isAlphaWallet) return 'alphaWallet';
-
-    if (window.web3.currentProvider.isStatus) return 'status';
-
-    if (window.web3.currentProvider.isToshi) return 'coinbase';
-
-    if (typeof window.__CIPHER__ !== 'undefined') return 'cipher';
-
-    if (window.web3.currentProvider.constructor.name === 'EthereumProvider')
-      return 'mist';
-
-    if (window.web3.currentProvider.constructor.name === 'Web3FrameProvider')
-      return 'parity';
-
-    if (
-      window.web3.currentProvider.host &&
-      window.web3.currentProvider.host.indexOf('infura') !== -1
-    )
-      return 'infura';
-
-    if (
-      window.web3.currentProvider.host &&
-      window.web3.currentProvider.host.indexOf('localhost') !== -1
-    )
-      return 'localhost';
-
-    return 'unknown';
+    this.todoList = await this.contracts.TodoList.deployed();
   }
 
   async loadAccount() {
     // Set the current blockchain account
     this.accounts = await window.web3.eth.getAccounts();
+    window.web3.eth.defaultAccount = this.accounts[0];
   }
 
   async loadTodoList() {
     console.log(this.todoList);
+    console.log(await this.todoList.createTask('Anurag'));
+    // window.location.reload();
     // const taskCount = await this.todoList.taskCount();
-    // console.log(taskCount);
+    // console.log(taskCount.toNumber());
+
+    // console.log(await this.todoList.tasks(1));
+    // for (var i = 1; i <= taskCount; i++) {
+    //   const task = await this.todoList.tasks(i);
+    //   const taskId = task[0].toNumber();
+    //   console.log(taskId);
+    // }
   }
 
   async LOGIN(email, password) {
