@@ -1,38 +1,34 @@
-import React, { useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Hidden from '@material-ui/core/Hidden';
-import Link from '@material-ui/core/Link';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
-import Chip from '@material-ui/core/Chip';
-import Container from '@material-ui/core/Container';
-import Markdown from './Markdown';
-import { NavLink } from 'react-router-dom';
-import { UserContext } from './../context/userContext';
+import React, { useContext } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Hidden from "@material-ui/core/Hidden";
+import Link from "@material-ui/core/Link";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
+import Container from "@material-ui/core/Container";
+import Markdown from "./Markdown";
+import { NavLink } from "react-router-dom";
+import { UserContext } from "./../context/userContext";
+import api from "./../api";
+import * as webStorage from "./../api/webStorage";
 
-function Copyright() {
-  return (
-    <Typography variant='body2' color='textSecondary' align='center'>
-      {'Copyright © '}
-      <Link color='inherit' href='https://material-ui.com/'>
-        DigiCourt
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+function logout() {
+  webStorage.local.destroy("$accessToken");
+  if (typeof window !== "undefined") {
+    window.location.href = "/";
+  }
 }
 
 const useStyles = makeStyles(theme => ({
@@ -43,8 +39,8 @@ const useStyles = makeStyles(theme => ({
     flex: 1
   },
   toolbarSecondary: {
-    justifyContent: 'space-between',
-    overflowX: 'auto'
+    justifyContent: "space-between",
+    overflowX: "auto"
   },
   toolbarLink: {
     padding: theme.spacing(1),
@@ -56,27 +52,27 @@ const useStyles = makeStyles(theme => ({
     width: 200
   },
   mainFeaturedPost: {
-    position: 'relative',
+    position: "relative",
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://source.unsplash.com/user/erondu)',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
+    backgroundImage: "url(https://source.unsplash.com/user/erondu)",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center"
   },
   overlay: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: 'rgba(0,0,0,.3)'
+    backgroundColor: "rgba(0,0,0,.3)"
   },
   mainFeaturedPostContent: {
-    position: 'relative',
+    position: "relative",
     padding: theme.spacing(3),
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       padding: theme.spacing(6),
       paddingRight: 0
     }
@@ -85,7 +81,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3)
   },
   card: {
-    display: 'flex'
+    display: "flex"
   },
   cardDetails: {
     flex: 1
@@ -112,137 +108,118 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const sections = [
-  'Technology',
-  'Design',
-  'Culture',
-  'Business',
-  'Politics',
-  'Opinion',
-  'Science',
-  'Health',
-  'Style',
-  'Travel'
+  "Technology",
+  "Design",
+  "Culture",
+  "Business",
+  "Politics",
+  "Opinion",
+  "Science",
+  "Health",
+  "Style",
+  "Travel"
 ];
 
 const featuredPosts = [
   {
-    title: 'Case 1',
-    date: 'Nov 12',
+    title: "Case 1",
+    date: "Nov 12",
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.'
+      "This is a wider card with supporting text below as a natural lead-in to additional content."
   },
   {
-    title: 'Case 2',
-    date: 'Nov 11',
+    title: "Case 2",
+    date: "Nov 11",
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.'
+      "This is a wider card with supporting text below as a natural lead-in to additional content."
   },
   {
-    title: 'Case 2',
-    date: 'Nov 11',
+    title: "Case 3",
+    date: "Nov 11",
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.'
+      "This is a wider card with supporting text below as a natural lead-in to additional content."
   },
   {
-    title: 'Case 2',
-    date: 'Nov 11',
+    title: "Case 4",
+    date: "Nov 11",
     description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.'
+      "This is a wider card with supporting text below as a natural lead-in to additional content."
   }
 ];
 
-const posts = [];
-
-const archives = [
-  'March 2020',
-  'February 2020',
-  'January 2020',
-  'December 2019',
-  'November 2019',
-  'October 2019',
-  'September 2019',
-  'August 2019',
-  'July 2019',
-  'June 2019',
-  'May 2019',
-  'April 2019'
-];
-
-const social = ['GitHub', 'Twitter', 'Facebook'];
-
 export default function Main() {
+  
   const classes = useStyles();
   const user = useContext(UserContext);
 
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth='lg'>
+      <Container maxWidth="lg">
         <Toolbar className={classes.toolbar}>
-          <Button size='small'>{user.name ? user.name : ''}</Button>
+          <Button size="small">{user.name ? user.name : ""}</Button>
           <Typography
-            component='h2'
-            variant='h5'
-            color='inherit'
-            align='center'
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
             noWrap
             className={classes.toolbarTitle}
-          >
-          </Typography>
+          ></Typography>
           <TextField
-            label='Search'
-            id='outlined-margin-dense'
+            label="Search"
+            id="outlined-margin-dense"
             className={classes.textField}
-            margin='dense'
-            variant='outlined'
+            margin="dense"
+            variant="outlined"
           />
           {!user.name ? (
-            <NavLink exact activeClassName='active' to='/signin'>
-              <Button variant='outlined' size='small'>
+            <NavLink exact activeClassName="active" to="/signin">
+              <Button variant="outlined" size="small">
                 Sign in
               </Button>
             </NavLink>
           ) : (
-            ''
+            ""
           )}
           &nbsp;
           {!user.name ? (
-            <NavLink exact activeClassName='active' to='/signup'>
-              <Button variant='outlined' size='small'>
+            <NavLink exact activeClassName="active" to="/signup">
+              <Button variant="outlined" size="small">
                 Sign up
               </Button>
             </NavLink>
           ) : (
-            ''
+            ""
           )}
           {user.name ? (
-            <Button variant='outlined' size='small' color='primary'>
+            <Button variant="outlined" size="small" color="primary">
               New Case
             </Button>
           ) : (
-            ''
+            ""
           )}
           &nbsp;
           {user.name ? (
-            <Button variant='outlined' size='small'>
+            <Button variant="outlined" size="small" onClick={logout}>
               Logout
             </Button>
           ) : (
-            ''
+            ""
           )}
         </Toolbar>
         <Toolbar
-          component='nav'
-          variant='dense'
+          component="nav"
+          variant="dense"
           className={classes.toolbarSecondary}
         >
           {sections.map(section => (
             <Link
-              color='inherit'
+              color="inherit"
               noWrap
               key={section}
-              variant='body2'
-              href='#'
+              variant="body2"
+              href="#"
               className={classes.toolbarLink}
             >
               {section}
@@ -255,9 +232,9 @@ export default function Main() {
             {/* Increase the priority of the hero background image */}
             {
               <img
-                style={{ display: 'none' }}
-                src='https://source.unsplash.com/user/erondu'
-                alt='background'
+                style={{ display: "none" }}
+                src="https://source.unsplash.com/user/erondu"
+                alt="background"
               />
             }
             <div className={classes.overlay} />
@@ -289,31 +266,31 @@ export default function Main() {
           <Grid container spacing={4}>
             {featuredPosts.map(post => (
               <Grid item key={post.title} xs={12} md={6}>
-                <CardActionArea component='a' href='#'>
+                <CardActionArea component="a" href="#">
                   <Card className={classes.card}>
                     <div className={classes.cardDetails}>
                       <CardContent>
-                        <Typography component='h2' variant='h5'>
+                        <Typography component="h2" variant="h5">
                           {post.title}
                         </Typography>
-                        <Typography variant='subtitle1' color='textSecondary'>
+                        <Typography variant="subtitle1" color="textSecondary">
                           {post.date}
                         </Typography>
-                        <Typography variant='subtitle1' paragraph>
+                        <Typography variant="subtitle1" paragraph>
                           {post.description}
                         </Typography>
                         {/* <Typography variant='subtitle1' color='primary'>
                           Continue reading...
                         </Typography> */}
                         {/* <Chip label="Pending"  color="secondary" /> */}
-                        <Chip label='Verdict' color='primary' />
+                        <Chip label="Verdict" color="primary" />
                       </CardContent>
                     </div>
                     <Hidden xsDown>
                       <CardMedia
                         className={classes.cardMedia}
-                        image='https://source.unsplash.com/random'
-                        title='Image title'
+                        image="https://source.unsplash.com/random"
+                        title="Image title"
                       />
                     </Hidden>
                   </Card>

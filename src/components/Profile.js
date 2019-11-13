@@ -15,24 +15,14 @@ import Hidden from "@material-ui/core/Hidden";
 import Link from "@material-ui/core/Link";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
 import Container from "@material-ui/core/Container";
 import Markdown from "./Markdown";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "./../context/userContext";
+import api from "./../api";
 import * as webStorage from "./../api/webStorage";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        DigiCourt
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 function logout() {
   webStorage.local.destroy("$accessToken");
@@ -55,6 +45,11 @@ const useStyles = makeStyles(theme => ({
   toolbarLink: {
     padding: theme.spacing(1),
     flexShrink: 0
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200
   },
   mainFeaturedPost: {
     position: "relative",
@@ -127,37 +122,30 @@ const sections = [
 
 const featuredPosts = [
   {
-    title: "Featured post",
+    title: "Case 1",
     date: "Nov 12",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content."
   },
   {
-    title: "Post title",
+    title: "Case 2",
+    date: "Nov 11",
+    description:
+      "This is a wider card with supporting text below as a natural lead-in to additional content."
+  },
+  {
+    title: "Case 3",
+    date: "Nov 11",
+    description:
+      "This is a wider card with supporting text below as a natural lead-in to additional content."
+  },
+  {
+    title: "Case 4",
     date: "Nov 11",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content."
   }
 ];
-
-const posts = [];
-
-const archives = [
-  "March 2020",
-  "February 2020",
-  "January 2020",
-  "December 2019",
-  "November 2019",
-  "October 2019",
-  "September 2019",
-  "August 2019",
-  "July 2019",
-  "June 2019",
-  "May 2019",
-  "April 2019"
-];
-
-const social = ["GitHub", "Twitter", "Facebook"];
 
 export default function Main() {
   const classes = useStyles();
@@ -176,12 +164,14 @@ export default function Main() {
             align="center"
             noWrap
             className={classes.toolbarTitle}
-          >
-            DigiCourt
-          </Typography>
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
+          ></Typography>
+          <TextField
+            label="Search"
+            id="outlined-margin-dense"
+            className={classes.textField}
+            margin="dense"
+            variant="outlined"
+          />
           {!user.name ? (
             <NavLink exact activeClassName="active" to="/signin">
               <Button variant="outlined" size="small">
@@ -201,6 +191,21 @@ export default function Main() {
           ) : (
             ""
           )}
+          {user.name ? (
+            <Button
+              variant="outlined"
+              size="small"
+              color="primary"
+              onClick={() => {
+                window.location.href = "/new";
+              }}
+            >
+              New Case
+            </Button>
+          ) : (
+            ""
+          )}
+          &nbsp;
           {user.name ? (
             <Button variant="outlined" size="small" onClick={logout}>
               Logout
@@ -239,28 +244,28 @@ export default function Main() {
               />
             }
             <div className={classes.overlay} />
-            <Grid container>
+            {/* <Grid container>
               <Grid item md={6}>
                 <div className={classes.mainFeaturedPostContent}>
                   <Typography
-                    component="h1"
-                    variant="h3"
-                    color="inherit"
+                    component='h1'
+                    variant='h3'
+                    color='inherit'
                     gutterBottom
                   >
                     Title of a longer featured Main post
                   </Typography>
-                  <Typography variant="h5" color="inherit" paragraph>
+                  <Typography variant='h5' color='inherit' paragraph>
                     Multiple lines of text that form the lede, informing new
                     readers quickly and efficiently about what&apos;s most
                     interesting in this post&apos;s contents.
                   </Typography>
-                  <Link variant="subtitle1" href="#">
+                  <Link variant='subtitle1' href='#'>
                     Continue reading…
                   </Link>
                 </div>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Paper>
           {/* End main featured post */}
           {/* Sub featured posts */}
@@ -280,9 +285,11 @@ export default function Main() {
                         <Typography variant="subtitle1" paragraph>
                           {post.description}
                         </Typography>
-                        <Typography variant="subtitle1" color="primary">
+                        {/* <Typography variant='subtitle1' color='primary'>
                           Continue reading...
-                        </Typography>
+                        </Typography> */}
+                        {/* <Chip label="Pending"  color="secondary" /> */}
+                        <Chip label="Verdict" color="primary" />
                       </CardContent>
                     </div>
                     <Hidden xsDown>
@@ -357,22 +364,22 @@ export default function Main() {
         </main>
       </Container>
       {/* Footer */}
-      <footer className={classes.footer}>
-        <Container maxWidth="lg">
-          <Typography variant="h6" align="center" gutterBottom>
+      {/* <footer className={classes.footer}>
+        <Container maxWidth='lg'>
+          <Typography variant='h6' align='center' gutterBottom>
             Footer
           </Typography>
           <Typography
-            variant="subtitle1"
-            align="center"
-            color="textSecondary"
-            component="p"
+            variant='subtitle1'
+            align='center'
+            color='textSecondary'
+            component='p'
           >
             Something here to give the footer a purpose!
           </Typography>
           <Copyright />
         </Container>
-      </footer>
+      </footer> */}
       {/* End footer */}
     </React.Fragment>
   );

@@ -23,6 +23,7 @@
     "cors": "^2.8.4",
     "ethereumjs-tx": "^2.1.1",
     "ethereumjs-util": "^6.2.0",
+    "ethers": "^4.0.39",
     "express": "^4.16.3",
     "guid": "0.0.12",
     "hdkey": "^1.1.1",

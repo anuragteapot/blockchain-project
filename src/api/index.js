@@ -1,26 +1,25 @@
-import AXIOS_API from './axios';
-import handleError from './handleError';
-import Web3 from 'web3';
-import TruffleContract from 'truffle-contract';
-import TodoList from './../build/contracts/TodoList.json';
+import AXIOS_API from "./axios";
+import handleError from "./handleError";
+import Web3 from "web3";
+import TruffleContract from "truffle-contract";
+import SuitList from "./../build/contracts/SuitList.json";
 
 class Api {
   constructor() {
-    this.load();
     this.contracts = {};
-    this.todoList = null;
+    this.SuitList = null;
     this.accounts = [];
   }
 
-  async load() {
+  async getSuit() {
     await this.loadWeb3();
     await this.loadAccount();
     await this.loadContract();
-    await this.loadTodoList();
+    return await this.loadSuitList();
   }
 
   async loadWeb3() {
-    if (window.ethereum) {
+    if ("ethereum" in window) {
       window.web3 = new Web3(window.ethereum);
       try {
         // Request account access if needed
@@ -32,7 +31,7 @@ class Api {
       } catch (error) {
         // User denied account access...
       }
-    } else if (window.web3) {
+    } else if ("web3" in window) {
       window.web3Provider = window.web3.currentProvider;
       window.web3 = new Web3(window.web3.currentProvider);
       // Acccounts always exposed
@@ -41,43 +40,42 @@ class Api {
       });
     } else {
       console.log(
-        'Non-Ethereum browser detected. You should consider trying MetaMask!'
+        "Non-Ethereum browser detected. You should consider trying MetaMask!"
       );
     }
   }
 
   async loadContract() {
-    this.contracts.TodoList = TruffleContract(TodoList);
-    this.contracts.TodoList.setProvider(window.web3.currentProvider);
+    if ("web3" in window) {
+      this.contracts.SuitList = TruffleContract(SuitList);
+      this.contracts.SuitList.setProvider(window.web3.currentProvider);
 
-    // Hydrate the smart contract with values from the blockchain
-    this.todoList = await this.contracts.TodoList.deployed();
+      // Hydrate the smart contract with values from the blockchain
+      this.SuitList = await this.contracts.SuitList.deployed();
+    }
   }
 
   async loadAccount() {
-    // Set the current blockchain account
-    this.accounts = await window.web3.eth.getAccounts();
-    window.web3.eth.defaultAccount = this.accounts[0];
+    if ("web3" in window) {
+      // Set the current blockchain account
+      this.accounts = await window.web3.eth.getAccounts();
+      window.web3.eth.defaultAccount = this.accounts[0];
+    }
   }
 
-  async loadTodoList() {
-    console.log(this.todoList);
-    console.log(await this.todoList.createTask('Anurag'));
-    // window.location.reload();
-    // const taskCount = await this.todoList.taskCount();
-    // console.log(taskCount.toNumber());
-
-    // console.log(await this.todoList.tasks(1));
-    // for (var i = 1; i <= taskCount; i++) {
-    //   const task = await this.todoList.tasks(i);
-    //   const taskId = task[0].toNumber();
-    //   console.log(taskId);
-    // }
+  async loadSuitList() {
+    const taskCount = await this.SuitList.suitCount();
+    let result = [];
+    for (let i = 1; i <= taskCount.toNumber(); i++) {
+      const suit = await this.SuitList.suits(i);
+      result.push(suit);
+    }
+    return result;
   }
 
   async LOGIN(email, password) {
     try {
-      return await AXIOS_API.post('/api/auth', {
+      return await AXIOS_API.post("/api/auth", {
         email,
         password
       });
@@ -88,7 +86,7 @@ class Api {
 
   async GET_USER() {
     try {
-      return await AXIOS_API.get('/api/user');
+      return await AXIOS_API.get("/api/user");
     } catch (err) {
       new handleError()._handleError(err);
     }
@@ -96,7 +94,7 @@ class Api {
 
   async SIGNUP(email, password, name, age) {
     try {
-      return await AXIOS_API.post('/api/user', {
+      return await AXIOS_API.post("/api/user", {
         email,
         password,
         age,
