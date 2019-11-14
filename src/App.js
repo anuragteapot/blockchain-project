@@ -6,11 +6,13 @@ import Main from "./components/main";
 import SignUp from "./components/signup";
 import CheckOut from "./components/checkout";
 import { UserProvider } from "./context/userContext";
+import { ContractProvider } from "./context/contractContext";
 import SimpleSnackbar from "./components/SimpleSnackbar";
 import Judge from "./components/judge";
 import Profile from "./components/Profile";
 import { ethers } from "ethers";
 import Web3 from "web3";
+import api from "./api";
 import truffleContract from "truffle-contract";
 import suitList from "./build/contracts/SuitList.json";
 // import NotFound from './components/notfound';
@@ -22,7 +24,8 @@ class App extends Component {
       storageData: [],
       web3: null,
       accounts: null,
-      contract: null
+      contract: null,
+      user: {}
     };
   }
 
@@ -35,6 +38,14 @@ class App extends Component {
   }
 
   componentDidMount = async () => {
+    const user = await api.GET_USER();
+
+    if (user) {
+      this.setState({
+        user: user.data
+      });
+    }
+
     try {
       // Modern dapp browsers...
       if (window.ethereum) {
@@ -121,17 +132,19 @@ class App extends Component {
     return (
       <div className="App">
         <UserProvider value={{ ...this.state.user }}>
-          <Router>
-            <div>
-              <Route exact path="/" component={Main} />
-              <Route path="/signin" component={SignIn} />
-              <Route path="/signup" component={SignUp} />
-              <Route path="/new" component={CheckOut} />
-              <Route path="/judge" component={Judge} />
-              <Route path="/profile" component={Profile} />
-              {/* <Route path='*'  component={NotFound} /> */}
-            </div>
-          </Router>
+          <ContractProvider value={{ ...this.state }}>
+            <Router>
+              <div>
+                <Route exact path="/" component={Main} />
+                <Route path="/signin" component={SignIn} />
+                <Route path="/signup" component={SignUp} />
+                <Route path="/new" component={CheckOut} />
+                <Route path="/judge" component={Judge} />
+                <Route path="/profile" component={Profile} />
+                {/* <Route path='*'  component={NotFound} /> */}
+              </div>
+            </Router>
+          </ContractProvider>
         </UserProvider>
         <SimpleSnackbar></SimpleSnackbar>
       </div>
