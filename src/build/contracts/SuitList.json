@@ -4901,14 +4901,96 @@
   },
   "networks": {
     "5777": {
-      "events": {},
+      "events": {
+        "0xb31565cd6bd5e632e2f32975048416329d12eb60629dee3f56f288fa2b179749": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "userId",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "userIdAccused",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "content",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "documentFile",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "accusedContent",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "accusedDocumentFile",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "openDate",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "closeDate",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "verdict",
+              "type": "bytes32"
+            }
+          ],
+          "name": "SuitCreated",
+          "type": "event",
+          "signature": "0xb31565cd6bd5e632e2f32975048416329d12eb60629dee3f56f288fa2b179749"
+        },
+        "0x94967b3b2e6db50432a768af4aee86963591440e6d84f9b89f6bd53ac9d151fc": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "_closeDate",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "name": "verdict",
+              "type": "bytes32"
+            }
+          ],
+          "name": "SuitCompleted",
+          "type": "event",
+          "signature": "0x94967b3b2e6db50432a768af4aee86963591440e6d84f9b89f6bd53ac9d151fc"
+        }
+      },
       "links": {},
-      "address": "0xcc3D1d48B1c344F912AF1DD8AE6ebef3303D494B",
-      "transactionHash": "0x195a5ba549bb3eaf71d0038f242db68f91d573d8564d89ee5f0605f6e4dc5c47"
+      "address": "0xAcB33FF6f21653a4bFb8EAa3c0f8882197cf533c",
+      "transactionHash": "0x0478d0e93bd5dd305436e80c57bf75640fcb7338ed7d81a4bbec9f35c54bb419"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-11-13T12:56:17.387Z",
+  "updatedAt": "2019-11-14T14:17:03.861Z",
   "devdoc": {
     "methods": {}
   },
