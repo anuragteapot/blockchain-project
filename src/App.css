@@ -5,3 +5,7 @@ a {
 .active {
     color: rgb(142, 243, 132);
 }
+
+.c_textarea {
+    width: 100%;
+}

@@ -109,6 +109,8 @@ class App extends Component {
     this.setState({
       storageData: result
     });
+
+    console.log(result);
   };
 
   handleClick = async () => {
@@ -135,6 +137,7 @@ class App extends Component {
           <ContractProvider value={{ ...this.state }}>
             <Router>
               <div>
+                <button onClick={this.handleClick}>Click</button>
                 <Route exact path="/" component={Main} />
                 <Route path="/signin" component={SignIn} />
                 <Route path="/signup" component={SignUp} />

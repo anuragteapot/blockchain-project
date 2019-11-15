@@ -15,6 +15,20 @@ class Api {
     }
   }
 
+  async UPLOAD(id, formData) {
+    try {
+      return await AXIOS_API.post(`/api/action/upload${id}`, formData, {
+        retry: 3,
+        retryDelay: 1000,
+        onUploadProgress: e => {
+          console.log(Math.round((e.loaded * 100) / e.total));
+        }
+      });
+    } catch (err) {
+      new handleError()._handleError(err);
+    }
+  }
+
   async GET_USER() {
     try {
       return await AXIOS_API.get("/api/user");

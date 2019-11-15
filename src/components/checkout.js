@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
@@ -10,7 +10,9 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
+import { ethers } from "ethers";
 import Review from "./Review";
+import { ContractContext } from "./../context/contractContext";
 
 function Copyright() {
   return (
@@ -62,14 +64,77 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const steps = ["Accused Address", "Payment details", "Review your order"];
+const steps = ["Accused Information", "Case Details", "Review your case"];
+
+let name = null;
+let city = null;
+let state = null;
+let zip = null;
+let address = null;
+let suit = null;
+let country = null;
+let documents = null;
+
+const stoh = string => {
+  return ethers.utils.formatBytes32String(string);
+};
+
+const htos = string => {
+  return ethers.utils.parseBytes32String(string);
+};
+
+const handleChangeName = val => {
+  name = val;
+};
+
+const handleChangeCity = val => {
+  city = val;
+};
+
+const handleChangeState = val => {
+  state = val;
+};
+
+const handleChangeZip = val => {
+  zip = val;
+};
+
+const handleChangeAddress = val => {
+  address = val;
+};
+
+const handleChangeCountry = val => {
+  country = val;
+};
+
+const handleChangeSuit = val => {
+  suit = val;
+};
+
+const handleChangeDocuments = val => {
+  documents = val;
+};
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return (
+        <AddressForm
+          handleChangeName={handleChangeName}
+          handleChangeCity={handleChangeCity}
+          handleChangeState={handleChangeState}
+          handleChangeZip={handleChangeZip}
+          handleChangeAddress={handleChangeAddress}
+          handleChangeCountry={handleChangeCountry}
+        />
+      );
     case 1:
-      return <PaymentForm />;
+      return (
+        <PaymentForm
+          handleChangeSuit={handleChangeSuit}
+          handleChangeDocuments={handleChangeDocuments}
+        />
+      );
     case 2:
       return <Review />;
     default:
@@ -79,14 +144,40 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const classes = useStyles();
+  const Contract = useContext(ContractContext);
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+
+    if (activeStep == 2) {
+      submit();
+    }
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+  };
+
+  const submit = async () => {
+    console.log(Contract);
+
+    const { accounts, contract } = Contract;
+    const data = [
+      "1",
+      "2",
+      "Anurag content",
+      "anurag",
+      "anurag",
+      "anurag",
+      "anurag",
+      "anurag",
+      "Passed"
+    ];
+
+    const hexData = data.map(val => stoh(val));
+    console.log(hexData);
+    await contract.createSuit(...hexData, { from: accounts[0] });
   };
 
   return (
@@ -111,9 +202,7 @@ export default function Checkout() {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  Your case number is #2001539. Please note down in safe place.
                 </Typography>
               </React.Fragment>
             ) : (
@@ -131,7 +220,7 @@ export default function Checkout() {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                    {activeStep === steps.length - 1 ? "Done" : "Next"}
                   </Button>
                 </div>
               </React.Fragment>
