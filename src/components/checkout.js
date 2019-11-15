@@ -1,44 +1,42 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
-import Review from './Review';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Paper from "@material-ui/core/Paper";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
+import AddressForm from "./AddressForm";
+import PaymentForm from "./PaymentForm";
+import Review from "./Review";
 
 function Copyright() {
   return (
-    <Typography variant='body2' color='textSecondary' align='center'>
-      {'Copyright © '}
-      <Link color='inherit' href='https://material-ui.com/'>
-        Your Website
-      </Link>{' '}
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright © "}
+      <Link color="inherit" href="https://material-ui.com/">
+        Digi Court
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 const useStyles = makeStyles(theme => ({
   appBar: {
-    position: 'relative'
+    position: "relative"
   },
   layout: {
-    width: 'auto',
+    width: "auto",
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto'
+      marginLeft: "auto",
+      marginRight: "auto"
     }
   },
   paper: {
@@ -55,8 +53,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3, 0, 5)
   },
   buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end'
+    display: "flex",
+    justifyContent: "flex-end"
   },
   button: {
     marginTop: theme.spacing(3),
@@ -64,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ["Accused Address", "Payment details", "Review your order"];
 
 function getStepContent(step) {
   switch (step) {
@@ -75,7 +73,7 @@ function getStepContent(step) {
     case 2:
       return <Review />;
     default:
-      throw new Error('Unknown step');
+      throw new Error("Unknown step");
   }
 }
 
@@ -96,8 +94,8 @@ export default function Checkout() {
       <CssBaseline />
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography component='h1' variant='h4' align='center'>
-            Send Case
+          <Typography component="h1" variant="h4" align="center">
+            File a Suit
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map(label => (
@@ -109,10 +107,10 @@ export default function Checkout() {
           <React.Fragment>
             {activeStep === steps.length ? (
               <React.Fragment>
-                <Typography variant='h5' gutterBottom>
+                <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
-                <Typography variant='subtitle1'>
+                <Typography variant="subtitle1">
                   Your order number is #2001539. We have emailed your order
                   confirmation, and will send you an update when your order has
                   shipped.
@@ -128,12 +126,12 @@ export default function Checkout() {
                     </Button>
                   )}
                   <Button
-                    variant='contained'
-                    color='primary'
+                    variant="contained"
+                    color="primary"
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
                   </Button>
                 </div>
               </React.Fragment>

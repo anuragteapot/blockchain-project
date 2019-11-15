@@ -193,14 +193,6 @@ export default function Main() {
             ""
           )}
           {user.name ? (
-            <Button variant="outlined" size="small" color="primary">
-              New Case
-            </Button>
-          ) : (
-            ""
-          )}
-          &nbsp;
-          {user.name ? (
             <Button variant="outlined" size="small" onClick={logout}>
               Logout
             </Button>

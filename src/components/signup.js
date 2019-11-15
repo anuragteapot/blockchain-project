@@ -4,7 +4,8 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -65,6 +66,21 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
   const classes = useStyles();
+
+  const [age, setAge] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const handleChange = event => {
+    setAge(event.target.value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -136,6 +152,24 @@ export default function SignUp() {
                 id="age"
                 autoComplete="age"
               />
+            </Grid>
+            <Grid item xs={12}>
+              {/* <Select
+                labelId="demo-controlled-open-select-label"
+                id="demo-controlled-open-select"
+                open={open}
+                onClose={handleClose}
+                onOpen={handleOpen}
+                value={age}
+                onChange={handleChange}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select> */}
             </Grid>
             {/* <Grid item xs={12}>
               <FormControlLabel
