@@ -106,15 +106,14 @@ class App extends Component {
       const suit = await contract.suits(i);
       result.push(suit);
     }
+    console.log(result);
     this.setState({
       storageData: result
     });
-
-    console.log(result);
   };
 
   handleClick = async () => {
-    const { accounts, contract } = this.state;
+    const { accounts, contract, web3 } = this.state;
     const data = [
       "1",
       "2",
@@ -128,7 +127,11 @@ class App extends Component {
     ];
 
     const hexData = data.map(val => this.stoh(val));
-    await contract.createSuit(...hexData, { from: accounts[0] });
+    await contract.createSuit(...hexData, {
+      gasLimit: web3.utils.toHex(250000),
+      gasPrice: web3.utils.toHex(10e9),
+      from: accounts[0]
+    });
   };
   render() {
     return (
@@ -137,7 +140,7 @@ class App extends Component {
           <ContractProvider value={{ ...this.state }}>
             <Router>
               <div>
-                <button onClick={this.handleClick}>Click</button>
+                <button onClick={this.handleClick}>Click Me</button>
                 <Route exact path="/" component={Main} />
                 <Route path="/signin" component={SignIn} />
                 <Route path="/signup" component={SignUp} />

@@ -162,21 +162,20 @@ export default function Checkout() {
   const submit = async () => {
     console.log(Contract);
 
-    const { accounts, contract } = Contract;
+    const { accounts, contract, user } = Contract;
     const data = [
-      "1",
-      "2",
+      "user",
+      "0",
       "Anurag content",
-      "anurag",
-      "anurag",
-      "anurag",
-      "anurag",
+      "suit",
+      "file1",
+      "file2",
+      "anaurag",
       "anurag",
       "Passed"
     ];
 
     const hexData = data.map(val => stoh(val));
-    console.log(hexData);
     await contract.createSuit(...hexData, { from: accounts[0] });
   };
 
@@ -199,7 +198,7 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Thank you.
                 </Typography>
                 <Typography variant="subtitle1">
                   Your case number is #2001539. Please note down in safe place.
