@@ -4,8 +4,8 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -19,6 +19,7 @@ let email = null;
 let age = null;
 let password = null;
 let name = null;
+let type = 1;
 
 function Copyright() {
   return (
@@ -35,7 +36,7 @@ function Copyright() {
 
 async function submit(event) {
   event.preventDefault();
-  await api.SIGNUP(email, password, age, name);
+  await api.SIGNUP(email, password, name, age, type);
   window.location.href = "/signin";
 }
 
@@ -66,21 +67,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
   const classes = useStyles();
-
-  const [age, setAge] = React.useState("");
-  const [open, setOpen] = React.useState(false);
-
-  const handleChange = event => {
-    setAge(event.target.value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
 
   return (
     <Container component="main" maxWidth="xs">

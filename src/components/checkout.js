@@ -12,6 +12,8 @@ import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import { ethers } from "ethers";
 import Review from "./Review";
+import hash from "object-hash";
+import api from "./../api";
 import { ContractContext } from "./../context/contractContext";
 
 function Copyright() {
@@ -71,9 +73,9 @@ let city = null;
 let state = null;
 let zip = null;
 let address = null;
-let suit = null;
 let country = null;
-let documents = null;
+let suit = null;
+let documents = {};
 
 const stoh = string => {
   return ethers.utils.formatBytes32String(string);
@@ -112,7 +114,7 @@ const handleChangeSuit = val => {
 };
 
 const handleChangeDocuments = val => {
-  documents = val;
+  documents.push(val);
 };
 
 function getStepContent(step) {
@@ -160,23 +162,45 @@ export default function Checkout() {
   };
 
   const submit = async () => {
-    console.log(Contract);
+    const { user } = Contract;
 
-    const { accounts, contract, user } = Contract;
-    const data = [
-      "user",
-      "0",
-      "Anurag content",
-      "suit",
-      "file1",
-      "file2",
-      "anaurag",
-      "anurag",
-      "Passed"
-    ];
+    let data = {
+      userId: user._id,
+      userIdAccused: "",
+      suitTitle: "",
+      content: suit,
+      accusedContent: "",
+      policeContent: "",
+      documentFile: documents,
+      accusedDocumentFile: "",
+      policeDocumentFile: "",
+      info: {
+        name,
+        city,
+        state,
+        zip,
+        address,
+        country
+      },
+      openDate: new Date().getTime(),
+      closeDate: "",
+      category: "",
+      verdict: ""
+    };
 
-    const hexData = data.map(val => stoh(val));
-    await contract.createSuit(...hexData, { from: accounts[0] });
+    try {
+      const suitData = await api.ADD_CASE(data);
+
+      const suitHash = hash(suitData.data);
+
+      console.log(hash, suitData.data._id);
+      const { accounts, contract } = Contract;
+      await contract.createSuit(suitData.data._id, suitHash, {
+        from: accounts[0]
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

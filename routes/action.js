@@ -55,6 +55,8 @@ router.post(
   ActionController.uploadFiles
 );
 
-router.get("/", auth, ActionController.getSuits);
+router.get("/suit/get", ActionController.getSuit);
+router.post("/suit/create", auth, ActionController.createSuit);
+router.post("/suit/update", auth, ActionController.updateSuit);
 
 module.exports = router;

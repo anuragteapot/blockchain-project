@@ -5,82 +5,43 @@ contract SuitList {
 
   struct Suit {
     uint256 id;
-    bytes32 userId;
-    bytes32 userIdAccused;
-    bytes32 content;
-    bytes32 documentFile;
-    bytes32 accusedContent;
-    bytes32 accusedDocumentFile;
-    bytes32 openDate;
-    bytes32 closeDate;
-    bytes32 verdict;
+    string suitId;
+    string suitHash;
   }
 
   mapping(uint256 => Suit) public suits;
 
   event SuitCreated(
     uint256 id,
-    bytes32 userId,
-    bytes32 userIdAccused,
-    bytes32 content,
-    bytes32 documentFile,
-    bytes32 accusedContent,
-    bytes32 accusedDocumentFile,
-    bytes32 openDate,
-    bytes32 closeDate,
-    bytes32 verdict
+    string suitId,
+    string suitHash
   );
 
   event SuitCompleted(
     uint256 id,
-    bytes32 _closeDate,
-    bytes32 verdict
+    string suitId,
+    string suitHash
   );
 
   constructor() public {
-    createSuit('1','2','Anurag content', 'anurag', 'anurag', 'anurag', 'anurag', 'anurag', 'Passed');
+    createSuit('2','Anurag content');
   }
 
   function createSuit(
-    bytes32 _userId,
-    bytes32  _userIdAccused,
-    bytes32  _content,
-    bytes32  _accusedContent,
-    bytes32  _documentFile,
-    bytes32  _accusedDocumentFile,
-    bytes32  _openDate,
-    bytes32  _closeDate,
-    bytes32  _verdict
+    string memory suitId,
+    string memory suitHash
   ) public {
     suitCount ++;
-    suits[suitCount] = Suit(suitCount,
-                        _userId,
-                        _userIdAccused,
-                        _content,
-                        _documentFile,
-                        _accusedContent,
-                        _accusedDocumentFile,
-                        _openDate,
-                        _closeDate,
-                        _verdict);
+    suits[suitCount] = Suit(suitCount, suitId, suitHash);
 
-    emit SuitCreated(suitCount,
-          _userId,
-          _userIdAccused,
-          _content,
-          _documentFile,
-          _accusedContent,
-          _accusedDocumentFile,
-          _openDate,
-          _closeDate,
-          _verdict);
+    emit SuitCreated(suitCount, suitId, suitHash);
   }
 
-  function verdictGiven(uint256 _id, bytes32  _closeDate, bytes32  _verdict) public {
+  function updateHash(uint256 _id, string memory _suitId, string memory _suitHash) public {
     Suit memory _suit = suits[_id];
-    _suit.verdict = _verdict;
-    _suit.closeDate = _closeDate;
+    _suit.suitId = _suitId;
+    _suit.suitHash = _suitHash;
     suits[_id] = _suit;
-    emit SuitCompleted(_id, _suit.closeDate, _suit.verdict);
+    emit SuitCompleted(_id, _suit.suitId, _suit.suitHash);
   }
 }

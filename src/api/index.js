@@ -29,6 +29,30 @@ class Api {
     }
   }
 
+  async GET_CASE() {
+    try {
+      return await AXIOS_API.get(`/api/action/suit/get`);
+    } catch (err) {
+      new handleError()._handleError(err);
+    }
+  }
+
+  async ADD_CASE(data) {
+    try {
+      return await AXIOS_API.post(`/api/action/suit/create`, data);
+    } catch (err) {
+      new handleError()._handleError(err);
+    }
+  }
+
+  async UPDATE_CASE(data) {
+    try {
+      return await AXIOS_API.post(`/api/action/suit/update`, data);
+    } catch (err) {
+      new handleError()._handleError(err);
+    }
+  }
+
   async GET_USER() {
     try {
       return await AXIOS_API.get("/api/user");
@@ -37,13 +61,14 @@ class Api {
     }
   }
 
-  async SIGNUP(email, password, name, age) {
+  async SIGNUP(email, password, name, age, type) {
     try {
       return await AXIOS_API.post("/api/user", {
         email,
         password,
         age,
-        name
+        name,
+        type
       });
     } catch (err) {
       new handleError()._handleError(err);
