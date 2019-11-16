@@ -37,7 +37,7 @@ class Action {
     }
 
     try {
-      const data = await SuitModel.find();
+      const data = await SuitModel.find().sort({ openDate: -1 });
       res.status(httpStatus.CREATED).json(data);
     } catch (e) {
       logs(`Error: ..:: ${e.message} ::..`, "error");
@@ -79,6 +79,5 @@ class Action {
       file: req.file
     });
   };
-
 }
 module.exports = new Action();

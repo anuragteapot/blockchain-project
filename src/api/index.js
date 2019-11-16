@@ -17,7 +17,7 @@ class Api {
 
   async UPLOAD(id, formData) {
     try {
-      return await AXIOS_API.post(`/api/action/upload${id}`, formData, {
+      return await AXIOS_API.post(`/api/action/upload/${id}`, formData, {
         retry: 3,
         retryDelay: 1000,
         onUploadProgress: e => {

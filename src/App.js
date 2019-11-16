@@ -15,6 +15,7 @@ import Web3 from "web3";
 import api from "./api";
 import truffleContract from "truffle-contract";
 import suitList from "./build/contracts/SuitList.json";
+import View from "./components/View";
 // import NotFound from './components/notfound';
 
 class App extends Component {
@@ -133,9 +134,10 @@ class App extends Component {
           <ContractProvider value={{ ...this.state }}>
             <Router>
               <div>
-                <button onClick={this.handleClick}>Click Me</button>
+                {/* <button onClick={this.handleClick}>Click Me</button> */}
                 <Route exact path="/" component={Main} />
                 <Route path="/signin" component={SignIn} />
+                <Route path="/view/:suitId" component={View} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/new" component={CheckOut} />
                 <Route path="/judge" component={Judge} />

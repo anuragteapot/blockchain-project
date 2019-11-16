@@ -75,7 +75,7 @@ let zip = null;
 let address = null;
 let country = null;
 let suit = null;
-let documents = {};
+let documents = [];
 
 const stoh = string => {
   return ethers.utils.formatBytes32String(string);
@@ -114,7 +114,7 @@ const handleChangeSuit = val => {
 };
 
 const handleChangeDocuments = val => {
-  documents.push(val);
+  documents = val;
 };
 
 function getStepContent(step) {
@@ -138,7 +138,17 @@ function getStepContent(step) {
         />
       );
     case 2:
-      return <Review />;
+      return (
+        <Review
+          documents={documents}
+          suit={suit}
+          country={country}
+          address={address}
+          zip={zip}
+          state={state}
+          name={name}
+        />
+      );
     default:
       throw new Error("Unknown step");
   }
@@ -146,8 +156,10 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const classes = useStyles();
+  let suitData = {};
   const Contract = useContext(ContractContext);
   const [activeStep, setActiveStep] = React.useState(0);
+  const [id, setId] = React.useState("");
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -172,8 +184,8 @@ export default function Checkout() {
       accusedContent: "",
       policeContent: "",
       documentFile: documents,
-      accusedDocumentFile: "",
-      policeDocumentFile: "",
+      accusedDocumentFile: [],
+      policeDocumentFile: [],
       info: {
         name,
         city,
@@ -182,25 +194,24 @@ export default function Checkout() {
         address,
         country
       },
+      victimInfo: user,
       openDate: new Date().getTime(),
       closeDate: "",
       category: "",
       verdict: ""
     };
 
-    try {
-      const suitData = await api.ADD_CASE(data);
+    suitData = await api.ADD_CASE(data);
 
-      const suitHash = hash(suitData.data);
+    const suitHash = hash(suitData.data);
 
-      console.log(suitHash, suitData.data._id);
-      const { accounts, contract } = Contract;
-      await contract.createSuit(suitData.data._id, suitHash, {
-        from: accounts[0]
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    console.log(suitHash, suitData.data._id);
+
+    setId(suitData.data._id.split("-")[0]);
+    const { accounts, contract } = Contract;
+    // await contract.createSuit(suitData.data._id, suitHash, {
+    //   from: accounts[0]
+    // });
   };
 
   return (
@@ -219,14 +230,22 @@ export default function Checkout() {
             ))}
           </Stepper>
           <React.Fragment>
-            {activeStep === steps.length ? (
+            {activeStep !== steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
                   Thank you.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your case number is #2001539. Please note down in safe place.
+                  Your case number is #{id}. Please note down in safe place.
                 </Typography>
+                <Button
+                  onClick={() => {
+                    window.location.href = "/";
+                  }}
+                  className={classes.button}
+                >
+                  Go to Home
+                </Button>
               </React.Fragment>
             ) : (
               <React.Fragment>

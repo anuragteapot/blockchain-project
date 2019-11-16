@@ -24,6 +24,11 @@ import { UserContext } from "./../context/userContext";
 import { ContractContext } from "./../context/contractContext";
 import api from "./../api";
 import * as webStorage from "./../api/webStorage";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 function logout() {
   webStorage.local.destroy("$accessToken");
@@ -110,15 +115,11 @@ const useStyles = makeStyles(theme => ({
 
 const sections = [
   "Technology",
-  "Design",
   "Culture",
   "Business",
   "Politics",
-  "Opinion",
   "Science",
-  "Health",
-  "Style",
-  "Travel"
+  "Style"
 ];
 
 export default function Main() {
@@ -128,7 +129,19 @@ export default function Main() {
 
   const { storageData } = contract;
 
-  console.log(storageData);
+  const [open, setOpen] = React.useState(false);
+  const [suitData, setSuitData] = React.useState({});
+
+  const handleClickOpen = suitId => {
+    const d = storageData.filter(val => val._id == suitId);
+    setSuitData(d[0]);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setSuitData({});
+    setOpen(false);
+  };
 
   return (
     <React.Fragment>
@@ -197,39 +210,32 @@ export default function Main() {
           ))}
         </Toolbar>
         <main>
-          {/* Main featured post */}
-          <Paper className={classes.mainFeaturedPost}>
-            {/* Increase the priority of the hero background image */}
-            {
-              <img
-                style={{ display: "none" }}
-                src="https://source.unsplash.com/user/erondu"
-                alt="background"
-              />
-            }
-            <div className={classes.overlay} />
-          </Paper>
           <Grid container spacing={4}>
             {storageData.map(post => (
               <Grid item key={post._id} xs={12} md={6}>
-                <CardActionArea component="a" href="#">
-                  <Card className={classes.card}>
+                <CardActionArea>
+                  <Card
+                    className={classes.card}
+                    onClick={() => {
+                      handleClickOpen(post._id);
+                    }}
+                  >
                     <div className={classes.cardDetails}>
                       <CardContent>
-                        <Typography component="h2" variant="h5">
-                          {"Case Id: " + post._id.split("-")[0]}
-                        </Typography>
+                        <span>Case Id : </span>
+                        <strong>{post._id.split("-")[0]}</strong>
+                        <br></br>
                         <Typography variant="subtitle1" color="textSecondary">
                           {post.openDate}
                         </Typography>
                         <Typography variant="subtitle1" paragraph>
                           {post.content}
                         </Typography>
-                        {/* <Typography variant='subtitle1' color='primary'>
-                          Continue reading...
-                        </Typography> */}
-                        {/* <Chip label="Pending"  color="secondary" /> */}
-                        <Chip label="Verdict" color="primary" />
+                        {post.verdict == "" ? (
+                          <Chip label="Pending" color="secondary" />
+                        ) : (
+                          <Chip label="Verdict Given" color="primary" />
+                        )}
                       </CardContent>
                     </div>
                   </Card>
@@ -237,6 +243,71 @@ export default function Main() {
               </Grid>
             ))}
           </Grid>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <Grid item xs={12} sm={6}>
+                <Typography variant="h6" gutterBottom className={classes.title}>
+                  Accused Person Details
+                </Typography>
+                <Typography gutterBottom>
+                  {suitData.info ? suitData.info.name : ""}
+                </Typography>
+                <Typography gutterBottom>
+                  {suitData.info ? suitData.info.address : ""}
+                </Typography>
+              </Grid>
+              <DialogContentText id="alert-dialog-description">
+                Case Details : <strong>{suitData._id}</strong> <br></br>
+                <br></br>
+                {suitData.content}
+              </DialogContentText>
+              <h2>Give Verdict</h2>
+              <textarea className="c_textarea"></textarea>
+              <Grid item xs={12}>
+                <h2>Police Documents : </h2>
+                {suitData.policeDocumentFile
+                  ? suitData.policeDocumentFile.map(val => (
+                      <Chip
+                        label={val.filename}
+                        component="a"
+                        key={val.filename}
+                        target="_blank"
+                        href={"http://localhost:3344/" + val.path}
+                        clickable
+                      />
+                    ))
+                  : ""}
+              </Grid>
+              <Grid item xs={12}>
+                <h2>Victim Documents : </h2>
+                {suitData.documentFile
+                  ? suitData.documentFile.map(val => (
+                      <Chip
+                        label={val.filename}
+                        component="a"
+                        key={val.filename}
+                        target="_blank"
+                        href={"http://localhost:3344/" + val.path}
+                        clickable
+                      />
+                    ))
+                  : ""}
+              </Grid>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Close
+              </Button>
+              <Button onClick={handleClose} color="primary" autoFocus>
+                Save
+              </Button>
+            </DialogActions>
+          </Dialog>
         </main>
       </Container>
     </React.Fragment>

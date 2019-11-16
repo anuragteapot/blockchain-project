@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +9,8 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import { width } from "@material-ui/system";
+import api from "./../api";
+import { UserContext } from "./../context/userContext";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -19,14 +21,33 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function upload(event) {}
+let documents = [];
 
 export default function PaymentForm(props) {
   const classes = useStyles();
 
-  const handleDelete = () => {
-    console.log(props);
-    console.info("You clicked the delete icon.");
+  const user = useContext(UserContext);
+
+  const [reload, setReload] = React.useState(0);
+
+  async function upload(event) {
+    const input = document.getElementById("contained-button-file");
+    const formData = new FormData();
+    formData.append("files", input.files[0]);
+    try {
+      const ud = await api.UPLOAD(user._id, formData);
+      documents.push(ud.data.file);
+      props.handleChangeDocuments(documents);
+      setReload(!reload);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleDelete = name => {
+    documents = documents.filter(val => val.filename !== name);
+    props.handleChangeDocuments(documents);
+    setReload(!reload);
   };
 
   return (
@@ -49,7 +70,6 @@ export default function PaymentForm(props) {
             accept="image/*"
             className={classes.input}
             id="contained-button-file"
-            multiple
             onChange={upload}
             type="file"
           />
@@ -64,12 +84,15 @@ export default function PaymentForm(props) {
             </Button>
           </label>
 
-          <Chip
-            label="Deletable primary"
-            onDelete={handleDelete}
-            color="primary"
-            variant="outlined"
-          />
+          {documents.map(val => (
+            <Chip
+              label={val.filename}
+              key={val.filename}
+              onDelete={() => handleDelete(val.filename)}
+              color="primary"
+              variant="outlined"
+            />
+          ))}
         </Grid>
       </Grid>
     </React.Fragment>

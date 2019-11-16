@@ -8,4 +8,18 @@ a {
 
 .c_textarea {
     width: 100%;
+    font-size: medium;
+    padding: 10px;
+    border: 1px solid grey;
+    outline: none;
+}
+
+.view_suit {
+    margin: 50px auto;
+    width: 80%;
+    padding: 10px;
+}
+
+.MuiDialog-paperWidthSm {
+    min-width: 90% !important;
 }

@@ -38,6 +38,9 @@ const SuitSchema = new Schema({
   info: {
     type: Object
   },
+  victimInfo: {
+    type: Object
+  },
   openDate: {
     type: Date
   },

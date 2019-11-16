@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Review() {
+export default function Review(props) {
   const classes = useStyles();
 
   const handleDelete = () => {
@@ -46,26 +46,30 @@ export default function Review() {
       <Typography variant="h6" gutterBottom>
         Review Your Suit
       </Typography>
-      <p> Case Details Hello</p>
+      <p> {props.suit}</p>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Accused Person Details
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(", ")}</Typography>
+          <Typography gutterBottom>{props.name}</Typography>
+          <Typography gutterBottom>{props.address}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Documents Details
           </Typography>
           <Grid container>
-            <Chip
-              label="Deletable primary"
-              onDelete={handleDelete}
-              color="primary"
-              variant="outlined"
-            />
+            {props.documents.map(val => (
+              <Chip
+                label={val.filename}
+                component="a"
+                key={val.filename}
+                target="_blank"
+                href={"http://localhost:3344/" + val.path}
+                clickable
+              />
+            ))}
           </Grid>
         </Grid>
       </Grid>
