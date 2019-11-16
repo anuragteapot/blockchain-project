@@ -14,6 +14,12 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import api from "./../api";
+import { green } from "@material-ui/core/colors";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 
 let email = null;
 let age = null;
@@ -67,6 +73,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
   const classes = useStyles();
+
+  const [value, setValue] = React.useState(1);
+
+  const handleChange = event => {
+    type = event.target.value;
+    setValue(event.target.value);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -140,22 +153,31 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              {/* <Select
-                labelId="demo-controlled-open-select-label"
-                id="demo-controlled-open-select"
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={age}
-                onChange={handleChange}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select> */}
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel component="legend">Type</FormLabel>
+                <RadioGroup
+                  aria-label="Type"
+                  name="Type"
+                  value={value}
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value="1"
+                    control={<Radio />}
+                    label="Judge"
+                  />
+                  <FormControlLabel
+                    value="2"
+                    control={<Radio />}
+                    label="Police"
+                  />
+                  <FormControlLabel
+                    value="3"
+                    control={<Radio />}
+                    label="Lawyer"
+                  />
+                </RadioGroup>
+              </FormControl>
             </Grid>
             {/* <Grid item xs={12}>
               <FormControlLabel

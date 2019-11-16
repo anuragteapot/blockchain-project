@@ -209,9 +209,9 @@ export default function Checkout() {
 
     setId(suitData.data._id.split("-")[0]);
     const { accounts, contract } = Contract;
-    // await contract.createSuit(suitData.data._id, suitHash, {
-    //   from: accounts[0]
-    // });
+    await contract.createSuit(suitData.data._id, suitHash, {
+      from: accounts[0]
+    });
   };
 
   return (
@@ -230,7 +230,7 @@ export default function Checkout() {
             ))}
           </Stepper>
           <React.Fragment>
-            {activeStep !== steps.length ? (
+            {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
                   Thank you.

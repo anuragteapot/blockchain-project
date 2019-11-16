@@ -67,7 +67,6 @@ export default function PaymentForm(props) {
         </Grid>
         <Grid item xs={12}>
           <input
-            accept="image/*"
             className={classes.input}
             id="contained-button-file"
             onChange={upload}
