@@ -21,6 +21,7 @@ import Container from "@material-ui/core/Container";
 import Markdown from "./Markdown";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "./../context/userContext";
+import { ContractContext } from "./../context/contractContext";
 import api from "./../api";
 import * as webStorage from "./../api/webStorage";
 
@@ -120,37 +121,14 @@ const sections = [
   "Travel"
 ];
 
-const featuredPosts = [
-  {
-    title: "Case 1",
-    date: "Nov 12",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content."
-  },
-  {
-    title: "Case 2",
-    date: "Nov 11",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content."
-  },
-  {
-    title: "Case 3",
-    date: "Nov 11",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content."
-  },
-  {
-    title: "Case 4",
-    date: "Nov 11",
-    description:
-      "This is a wider card with supporting text below as a natural lead-in to additional content."
-  }
-];
-
 export default function Main() {
-  
   const classes = useStyles();
   const user = useContext(UserContext);
+  const contract = useContext(ContractContext);
+
+  const { storageData } = contract;
+
+  console.log(storageData);
 
   return (
     <React.Fragment>
@@ -230,46 +208,22 @@ export default function Main() {
               />
             }
             <div className={classes.overlay} />
-            {/* <Grid container>
-              <Grid item md={6}>
-                <div className={classes.mainFeaturedPostContent}>
-                  <Typography
-                    component='h1'
-                    variant='h3'
-                    color='inherit'
-                    gutterBottom
-                  >
-                    Title of a longer featured Main post
-                  </Typography>
-                  <Typography variant='h5' color='inherit' paragraph>
-                    Multiple lines of text that form the lede, informing new
-                    readers quickly and efficiently about what&apos;s most
-                    interesting in this post&apos;s contents.
-                  </Typography>
-                  <Link variant='subtitle1' href='#'>
-                    Continue reading…
-                  </Link>
-                </div>
-              </Grid>
-            </Grid> */}
           </Paper>
-          {/* End main featured post */}
-          {/* Sub featured posts */}
           <Grid container spacing={4}>
-            {featuredPosts.map(post => (
-              <Grid item key={post.title} xs={12} md={6}>
+            {storageData.map(post => (
+              <Grid item key={post._id} xs={12} md={6}>
                 <CardActionArea component="a" href="#">
                   <Card className={classes.card}>
                     <div className={classes.cardDetails}>
                       <CardContent>
                         <Typography component="h2" variant="h5">
-                          {post.title}
+                          {"Case Id: " + post._id.split("-")[0]}
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
-                          {post.date}
+                          {post.openDate}
                         </Typography>
                         <Typography variant="subtitle1" paragraph>
-                          {post.description}
+                          {post.content}
                         </Typography>
                         {/* <Typography variant='subtitle1' color='primary'>
                           Continue reading...
@@ -278,95 +232,13 @@ export default function Main() {
                         <Chip label="Verdict" color="primary" />
                       </CardContent>
                     </div>
-                    <Hidden xsDown>
-                      <CardMedia
-                        className={classes.cardMedia}
-                        image="https://source.unsplash.com/random"
-                        title="Image title"
-                      />
-                    </Hidden>
                   </Card>
                 </CardActionArea>
               </Grid>
             ))}
           </Grid>
-          {/* End sub featured posts */}
-          {/* <Grid container spacing={5} className={classes.mainGrid}> */}
-          {/* Main content */}
-          {/* <Grid item xs={12} md={8}>
-              <Typography variant='h6' gutterBottom>
-                From the Firehose
-              </Typography>
-              <Divider />
-              {posts.map(post => (
-                <Markdown
-                  className={classes.markdown}
-                  key={post.substring(0, 40)}
-                >
-                  {post}
-                </Markdown>
-              ))}
-            </Grid> */}
-          {/* End main content */}
-          {/* Sidebar */}
-          {/* <Grid item xs={12} md={4}>
-              <Paper elevation={0} className={classes.sidebarAboutBox}>
-                <Typography variant='h6' gutterBottom>
-                  About
-                </Typography>
-                <Typography>
-                  Etiam porta sem malesuada magna mollis euismod. Cras mattis
-                  consectetur purus sit amet fermentum. Aenean lacinia bibendum
-                  nulla sed consectetur.
-                </Typography>
-              </Paper>
-              <Typography
-                variant='h6'
-                gutterBottom
-                className={classes.sidebarSection}
-              >
-                Archives
-              </Typography>
-              {archives.map(archive => (
-                <Link display='block' variant='body1' href='#' key={archive}>
-                  {archive}
-                </Link>
-              ))}
-              <Typography
-                variant='h6'
-                gutterBottom
-                className={classes.sidebarSection}
-              >
-                Social
-              </Typography>
-              {social.map(network => (
-                <Link display='block' variant='body1' href='#' key={network}>
-                  {network}
-                </Link>
-              ))}
-            </Grid> */}
-          {/* End sidebar */}
-          {/* </Grid> */}
         </main>
       </Container>
-      {/* Footer */}
-      {/* <footer className={classes.footer}>
-        <Container maxWidth='lg'>
-          <Typography variant='h6' align='center' gutterBottom>
-            Footer
-          </Typography>
-          <Typography
-            variant='subtitle1'
-            align='center'
-            color='textSecondary'
-            component='p'
-          >
-            Something here to give the footer a purpose!
-          </Typography>
-          <Copyright />
-        </Container>
-      </footer> */}
-      {/* End footer */}
     </React.Fragment>
   );
 }

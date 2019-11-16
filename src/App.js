@@ -99,14 +99,17 @@ class App extends Component {
   loadData = async () => {
     const { contract } = this.state;
 
-    const taskCount = await contract.suitCount();
+    const suitData = await api.GET_CASE();
+    // const taskCount = await contract.suitCount();
 
     let result = [];
-    for (let i = 1; i <= taskCount.toNumber(); i++) {
-      const suit = await contract.suits(i);
-      result.push(suit);
-    }
-    console.log(result);
+    // for (let i = 1; i <= taskCount.toNumber(); i++) {
+    //   const suit = await contract.suits(i);
+    //   result.push(suit);
+    // }
+
+    result = suitData.data;
+
     this.setState({
       storageData: result
     });
@@ -114,20 +117,10 @@ class App extends Component {
 
   handleClick = async () => {
     const { accounts, contract, web3 } = this.state;
-    const data = [
-      "1",
-      "2",
-      "Anurag content",
-      "anurag",
-      "anurag",
-      "anurag",
-      "anurag",
-      "anurag",
-      "Passed"
-    ];
+    const data = ["1", "hello"];
 
-    const hexData = data.map(val => this.stoh(val));
-    await contract.createSuit(...hexData, {
+    // const hexData = data.map(val => this.stoh(val));
+    await contract.createSuit(...data, {
       gasLimit: web3.utils.toHex(250000),
       gasPrice: web3.utils.toHex(10e9),
       from: accounts[0]

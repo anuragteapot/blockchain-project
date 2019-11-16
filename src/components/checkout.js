@@ -193,7 +193,7 @@ export default function Checkout() {
 
       const suitHash = hash(suitData.data);
 
-      console.log(hash, suitData.data._id);
+      console.log(suitHash, suitData.data._id);
       const { accounts, contract } = Contract;
       await contract.createSuit(suitData.data._id, suitHash, {
         from: accounts[0]

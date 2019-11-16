@@ -8,7 +8,8 @@ const SuitSchema = new Schema({
     default: () => Guid.raw()
   },
   userId: {
-    type: String
+    type: String,
+    required: true
   },
   userIdAccused: {
     type: String

@@ -2921,87 +2921,6 @@
   "networks": {
     "5777": {
       "events": {
-        "0xb31565cd6bd5e632e2f32975048416329d12eb60629dee3f56f288fa2b179749": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "id",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "userId",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "userIdAccused",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "content",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "documentFile",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "accusedContent",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "accusedDocumentFile",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "openDate",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "closeDate",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "verdict",
-              "type": "bytes32"
-            }
-          ],
-          "name": "SuitCreated",
-          "type": "event",
-          "signature": "0xb31565cd6bd5e632e2f32975048416329d12eb60629dee3f56f288fa2b179749"
-        },
-        "0x94967b3b2e6db50432a768af4aee86963591440e6d84f9b89f6bd53ac9d151fc": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "id",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "_closeDate",
-              "type": "bytes32"
-            },
-            {
-              "indexed": false,
-              "name": "verdict",
-              "type": "bytes32"
-            }
-          ],
-          "name": "SuitCompleted",
-          "type": "event",
-          "signature": "0x94967b3b2e6db50432a768af4aee86963591440e6d84f9b89f6bd53ac9d151fc"
-        },
         "0x9400fe982162066fc0754297726f960164664cd5440c99162f9d70f3c4cfc06f": {
           "anonymous": false,
           "inputs": [
@@ -3050,12 +2969,12 @@
         }
       },
       "links": {},
-      "address": "0x9b939846fBC88e3FA73033C856980E2E459e46e3",
-      "transactionHash": "0xd15a25f454335d59e12d636b75554cba82ad25bbccfb501871a6c059166e3528"
+      "address": "0x01d6E7Ac0baaB5Da38a3D91d4b28a0c40Af3285e",
+      "transactionHash": "0xe971486b28dc99aaae3b013288a5a6e84917c91a7c99692fa6fd789bb650b0b1"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-11-16T10:54:32.152Z",
+  "updatedAt": "2019-11-16T12:47:37.978Z",
   "devdoc": {
     "methods": {}
   },
