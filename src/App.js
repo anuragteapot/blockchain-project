@@ -101,13 +101,14 @@ class App extends Component {
     const { contract } = this.state;
 
     const suitData = await api.GET_CASE();
-    // const taskCount = await contract.suitCount();
+    const suitCount = await contract.suitCount();
 
     let result = [];
-    // for (let i = 1; i <= taskCount.toNumber(); i++) {
-    //   const suit = await contract.suits(i);
-    //   result.push(suit);
-    // }
+    for (let i = 1; i <= suitCount.toNumber(); i++) {
+      const suit = await contract.suits(i);
+      console.log(suit);
+      // result.push(suit);
+    }
 
     result = suitData.data;
 
