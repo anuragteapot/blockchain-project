@@ -30,6 +30,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import hash from "object-hash";
 
 function logout() {
   webStorage.local.destroy("$accessToken");
@@ -131,9 +132,9 @@ let documents = [];
 export default function Main(props) {
   const classes = useStyles();
   const user = useContext(UserContext);
-  const contract = useContext(ContractContext);
+  const Contract = useContext(ContractContext);
 
-  const { storageData } = contract;
+  const { storageData } = Contract;
 
   let verdict = "";
 
@@ -171,7 +172,13 @@ export default function Main(props) {
       console.log(err);
     }
 
-    await api.UPDATE_CASE(suitData);
+    const resSuitData = await api.UPDATE_CASE(suitData);
+    const suitHash = hash(resSuitData.data);
+    const { accounts, contract } = Contract;
+    await contract.createSuit(resSuitData.data._id, suitHash, {
+      from: accounts[0]
+    });
+
     window.location.reload();
   }
 
@@ -188,7 +195,13 @@ export default function Main(props) {
       console.log(err);
     }
 
-    await api.UPDATE_CASE(suitData);
+    const resSuitData = await api.UPDATE_CASE(suitData);
+    const suitHash = hash(resSuitData.data);
+    const { accounts, contract } = Contract;
+    await contract.createSuit(resSuitData.data._id, suitHash, {
+      from: accounts[0]
+    });
+
     window.location.reload();
   }
 
@@ -200,14 +213,28 @@ export default function Main(props) {
     let data = suitData;
     data.verdict = verdict;
     data.closeDate = new Date().getTime();
-    await api.UPDATE_CASE(data);
+
+    const resSuitData = await api.UPDATE_CASE(data);
+    const suitHash = hash(resSuitData.data);
+    const { accounts, contract } = Contract;
+    await contract.createSuit(resSuitData.data._id, suitHash, {
+      from: accounts[0]
+    });
+
     window.location.reload();
   };
 
   const acceptForDefence = async suitData => {
     let data = suitData;
     data.userIdAccused = user._id;
-    await api.UPDATE_CASE(data);
+
+    const resSuitData = await api.UPDATE_CASE(data);
+    const suitHash = hash(resSuitData.data);
+    const { accounts, contract } = Contract;
+    await contract.createSuit(resSuitData.data._id, suitHash, {
+      from: accounts[0]
+    });
+
     window.location.reload();
   };
 

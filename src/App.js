@@ -136,7 +136,7 @@ class App extends Component {
             <Router>
               <div>
                 {/* <button onClick={this.handleClick}>Click Me</button> */}
-                <Route exact path="/" component={Main} />
+                <Route exact path="/" component={Judge} />
                 <Route path="/signin" component={SignIn} />
                 <Route path="/view/:suitId" component={View} />
                 <Route path="/signup" component={SignUp} />
