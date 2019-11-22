@@ -118,12 +118,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const sections = [
-  "Technology",
-  "Culture",
-  "Business",
-  "Politics",
-  "Science",
-  "Style"
+  "About Us",
+  "Judgements",
+  "Administration",
+  "People",
+  "Citizen Services",
+  "RTI"
 ];
 
 let documents = [];
@@ -134,9 +134,6 @@ export default function Main(props) {
   const contract = useContext(ContractContext);
 
   const { storageData } = contract;
-
-  console.log(storageData);
-  console.log(user);
 
   let verdict = "";
 
@@ -227,14 +224,9 @@ export default function Main(props) {
             align="center"
             noWrap
             className={classes.toolbarTitle}
-          ></Typography>
-          <TextField
-            label="Search"
-            id="outlined-margin-dense"
-            className={classes.textField}
-            margin="dense"
-            variant="outlined"
-          />
+          >
+            Digi Court
+          </Typography>
           {!user.name ? (
             <NavLink exact activeClassName="active" to="/signin">
               <Button variant="outlined" size="small">
@@ -251,6 +243,20 @@ export default function Main(props) {
                 Sign up
               </Button>
             </NavLink>
+          ) : (
+            ""
+          )}
+          {user.name ? (
+            <Button
+              variant="outlined"
+              size="small"
+              color="primary"
+              onClick={() => {
+                window.location.href = "/new";
+              }}
+            >
+              New Case
+            </Button>
           ) : (
             ""
           )}
@@ -281,6 +287,12 @@ export default function Main(props) {
           ))}
         </Toolbar>
         <main>
+          {
+            <img
+              style={{ width: "100%" }}
+              src="http://localhost:3344/uploads/sup.jpeg"
+            />
+          }
           <Grid container spacing={4}>
             {storageData.map(post => (
               <Grid item key={post._id} xs={12} md={6}>
@@ -307,6 +319,11 @@ export default function Main(props) {
                         ) : (
                           <Chip label="Verdict Given" color="primary" />
                         )}
+                        {post.userIdAccused == user._id ? (
+                          <Chip label="Accepted" color="primary" />
+                        ) : (
+                          ""
+                        )}
                       </CardContent>
                     </div>
                   </Card>
@@ -322,7 +339,9 @@ export default function Main(props) {
           >
             <DialogContent>
               <Grid item xs={12} sm={6}>
-                {suitData.userIdAccused == "" && suitData.userId != user._id ? (
+                {suitData.userIdAccused == "" &&
+                suitData.userId != user._id &&
+                user.type == 3 ? (
                   <Button
                     variant="contained"
                     color="primary"
@@ -351,7 +370,7 @@ export default function Main(props) {
                 <br></br>
                 {suitData.content}
               </DialogContentText>
-              {suitData.verdict == "" ? (
+              {suitData.verdict == "" && user.type == 1 ? (
                 <div>
                   <h2>Give Verdict</h2>
                   <textarea
@@ -361,44 +380,57 @@ export default function Main(props) {
                 </div>
               ) : (
                 <div>
-                  <h2>Verdict</h2>
+                  <h2>
+                    {suitData.verdict != ""
+                      ? "Verdict Given :- "
+                      : "Verdict Not Given Yet!"}
+                  </h2>
                   {suitData.verdict}
                 </div>
               )}
               <Grid item xs={12}>
                 <h2>Police Documents : </h2>
-                <input
-                  className={classes.input}
-                  id="contained-button-file"
-                  onChange={() => {
-                    upload(suitData);
-                  }}
-                  type="file"
-                />
-                <label htmlFor="contained-button-file">
-                  <Button
-                    variant="contained"
-                    component="span"
-                    className={classes.button}
-                    startIcon={<CloudUploadIcon />}
-                  >
-                    Upload
-                  </Button>
-                </label>
+                {user.type == 2 && suitData.verdict == "" ? (
+                  <div>
+                    <input
+                      className={classes.input}
+                      id="contained-button-file"
+                      onChange={() => {
+                        upload(suitData);
+                      }}
+                      type="file"
+                    />
+                    <label htmlFor="contained-button-file">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        className={classes.button}
+                        startIcon={<CloudUploadIcon />}
+                      >
+                        Upload
+                      </Button>
+                    </label>
+                  </div>
+                ) : (
+                  ""
+                )}
                 &nbsp;
-                {suitData.policeDocumentFile
-                  ? suitData.policeDocumentFile.map(val => (
-                      <Chip
-                        label={val.filename}
-                        component="a"
-                        key={val.filename}
-                        target="_blank"
-                        href={"http://localhost:3344/" + val.path}
-                        clickable
-                      />
-                    ))
-                  : ""}
+                <Grid item xs={12}>
+                  {suitData.policeDocumentFile
+                    ? suitData.policeDocumentFile.map(val => (
+                        <Chip
+                          label={val.filename}
+                          component="a"
+                          key={val.filename}
+                          target="_blank"
+                          href={"http://localhost:3344/" + val.path}
+                          clickable
+                        />
+                      ))
+                    : ""}
+                </Grid>
               </Grid>
+              &nbsp;
               <Grid item xs={12}>
                 <h2>Prosecution Documents : </h2>
                 {suitData.documentFile
@@ -416,44 +448,55 @@ export default function Main(props) {
               </Grid>
               <Grid item xs={12}>
                 <h2>Defence Documents : </h2>
-                <input
-                  className={classes.input}
-                  id="contained-button-file-d"
-                  onChange={() => {
-                    uploadDefence(suitData);
-                  }}
-                  type="file"
-                />
-                <label htmlFor="contained-button-file-d">
-                  <Button
-                    variant="contained"
-                    component="span"
-                    className={classes.button}
-                    startIcon={<CloudUploadIcon />}
-                  >
-                    Upload
-                  </Button>
-                </label>
+                {suitData.verdict == "" &&
+                user.type == 3 &&
+                suitData.userIdAccused != "" &&
+                suitData.userId != user._id ? (
+                  <div>
+                    <input
+                      className={classes.input}
+                      id="contained-button-file-d"
+                      onChange={() => {
+                        uploadDefence(suitData);
+                      }}
+                      type="file"
+                    />
+                    <label htmlFor="contained-button-file-d">
+                      <Button
+                        variant="contained"
+                        component="span"
+                        className={classes.button}
+                        startIcon={<CloudUploadIcon />}
+                      >
+                        Upload
+                      </Button>
+                    </label>
+                  </div>
+                ) : (
+                  ""
+                )}
                 &nbsp;
-                {suitData.accusedDocumentFile
-                  ? suitData.accusedDocumentFile.map(val => (
-                      <Chip
-                        label={val.filename}
-                        component="a"
-                        key={val.filename}
-                        target="_blank"
-                        href={"http://localhost:3344/" + val.path}
-                        clickable
-                      />
-                    ))
-                  : ""}
+                <Grid item xs={12}>
+                  {suitData.accusedDocumentFile
+                    ? suitData.accusedDocumentFile.map(val => (
+                        <Chip
+                          label={val.filename}
+                          component="a"
+                          key={val.filename}
+                          target="_blank"
+                          href={"http://localhost:3344/" + val.path}
+                          clickable
+                        />
+                      ))
+                    : ""}
+                </Grid>
               </Grid>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 Close
               </Button>
-              {suitData.verdict == "" ? (
+              {suitData.verdict == "" && user.type == 1 ? (
                 <Button
                   onClick={() => {
                     giveVerdict(suitData);

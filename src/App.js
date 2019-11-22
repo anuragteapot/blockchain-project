@@ -142,7 +142,7 @@ class App extends Component {
                 <Route path="/signup" component={SignUp} />
                 <Route path="/new" component={CheckOut} />
                 <Route path="/dashboard" component={Judge} />
-                <Route path="/profile" component={Profile} />
+                {/* <Route path="/profile" component={Profile} /> */}
                 {/* <Route path='*'  component={NotFozund} /> */}
               </div>
             </Router>
