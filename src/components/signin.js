@@ -34,7 +34,7 @@ async function submit(event) {
   event.preventDefault();
   const token = await api.LOGIN(email, password);
   window.localStorage.setItem("$accessToken", token.data.token);
-  window.location.href = "/judge";
+  window.location.href = "/dashboard";
 }
 
 const useStyles = makeStyles(theme => ({

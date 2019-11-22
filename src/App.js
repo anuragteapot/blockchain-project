@@ -122,11 +122,11 @@ class App extends Component {
     const data = ["1", "hello"];
 
     // const hexData = data.map(val => this.stoh(val));
-    await contract.createSuit(...data, {
-      gasLimit: web3.utils.toHex(250000),
-      gasPrice: web3.utils.toHex(10e9),
-      from: accounts[0]
-    });
+    // await contract.createSuit(...data, {
+    //   gasLimit: web3.utils.toHex(250000),
+    //   gasPrice: web3.utils.toHex(10e9),
+    //   from: accounts[0]
+    // });
   };
   render() {
     return (
@@ -141,9 +141,9 @@ class App extends Component {
                 <Route path="/view/:suitId" component={View} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/new" component={CheckOut} />
-                <Route path="/judge" component={Judge} />
+                <Route path="/dashboard" component={Judge} />
                 <Route path="/profile" component={Profile} />
-                {/* <Route path='*'  component={NotFound} /> */}
+                {/* <Route path='*'  component={NotFozund} /> */}
               </div>
             </Router>
           </ContractProvider>

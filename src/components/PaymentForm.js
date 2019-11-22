@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import { width } from "@material-ui/system";
 import api from "./../api";
+import util from "./../api/utils";
 import { UserContext } from "./../context/userContext";
 
 const useStyles = makeStyles(theme => ({
@@ -31,6 +32,7 @@ export default function PaymentForm(props) {
   const [reload, setReload] = React.useState(0);
 
   async function upload(event) {
+    console.log(await util.eventHandler(event));
     const input = document.getElementById("contained-button-file");
     const formData = new FormData();
     formData.append("files", input.files[0]);

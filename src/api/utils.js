@@ -1,4 +1,7 @@
 /* eslint-disable no-useless-escape */
+import md5 from "md5";
+import { resolve } from "dns";
+
 export default new (class utils {
   constructor() {
     this.regMobile = /^\d{10}$/;
@@ -47,8 +50,10 @@ export default new (class utils {
    **/
   eventHandler(evt) {
     const file = evt.target.files[0];
-    fileHash(file, md5, function(x) {
-      return x;
+    return new Promise((resolve, rejects) => {
+      this.fileHash(file, md5, function(x) {
+        resolve(x);
+      });
     });
   }
 
