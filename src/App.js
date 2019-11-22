@@ -26,7 +26,8 @@ class App extends Component {
       web3: null,
       accounts: null,
       contract: null,
-      user: {}
+      user: {},
+      suits: []
     };
   }
 
@@ -104,29 +105,18 @@ class App extends Component {
     const suitCount = await contract.suitCount();
 
     let result = [];
+    let suits = [];
     for (let i = 1; i <= suitCount.toNumber(); i++) {
       const suit = await contract.suits(i);
-      console.log(suit);
-      // result.push(suit);
+      suits.push(suit);
     }
 
     result = suitData.data;
 
     this.setState({
-      storageData: result
+      storageData: result,
+      suits
     });
-  };
-
-  handleClick = async () => {
-    const { accounts, contract, web3 } = this.state;
-    const data = ["1", "hello"];
-
-    // const hexData = data.map(val => this.stoh(val));
-    // await contract.createSuit(...data, {
-    //   gasLimit: web3.utils.toHex(250000),
-    //   gasPrice: web3.utils.toHex(10e9),
-    //   from: accounts[0]
-    // });
   };
   render() {
     return (

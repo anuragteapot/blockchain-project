@@ -134,7 +134,7 @@ export default function Main(props) {
   const user = useContext(UserContext);
   const Contract = useContext(ContractContext);
 
-  const { storageData } = Contract;
+  const { storageData, suits } = Contract;
 
   let verdict = "";
 
@@ -175,9 +175,24 @@ export default function Main(props) {
     const resSuitData = await api.UPDATE_CASE(suitData);
     const suitHash = hash(resSuitData.data);
     const { accounts, contract } = Contract;
-    await contract.createSuit(resSuitData.data._id, suitHash, {
-      from: accounts[0]
-    });
+
+    let idx = null;
+    for (let i = 0; i < suits.length; i++) {
+      if (suits[i].suitId == resSuitData.data._id) {
+        idx = i;
+        break;
+      }
+    }
+
+    if (idx == null) {
+      await contract.createSuit(resSuitData.data._id, suitHash, {
+        from: accounts[0]
+      });
+    } else {
+      await contract.updateHash(idx, resSuitData.data._id, suitHash, {
+        from: accounts[0]
+      });
+    }
 
     window.location.reload();
   }
@@ -198,9 +213,24 @@ export default function Main(props) {
     const resSuitData = await api.UPDATE_CASE(suitData);
     const suitHash = hash(resSuitData.data);
     const { accounts, contract } = Contract;
-    await contract.createSuit(resSuitData.data._id, suitHash, {
-      from: accounts[0]
-    });
+
+    let idx = null;
+    for (let i = 0; i < suits.length; i++) {
+      if (suits[i].suitId == resSuitData.data._id) {
+        idx = i;
+        break;
+      }
+    }
+
+    if (idx == null) {
+      await contract.createSuit(resSuitData.data._id, suitHash, {
+        from: accounts[0]
+      });
+    } else {
+      await contract.updateHash(idx, resSuitData.data._id, suitHash, {
+        from: accounts[0]
+      });
+    }
 
     window.location.reload();
   }
@@ -217,9 +247,24 @@ export default function Main(props) {
     const resSuitData = await api.UPDATE_CASE(data);
     const suitHash = hash(resSuitData.data);
     const { accounts, contract } = Contract;
-    await contract.createSuit(resSuitData.data._id, suitHash, {
-      from: accounts[0]
-    });
+
+    let idx = null;
+    for (let i = 0; i < suits.length; i++) {
+      if (suits[i].suitId == resSuitData.data._id) {
+        idx = i;
+        break;
+      }
+    }
+
+    if (idx == null) {
+      await contract.createSuit(resSuitData.data._id, suitHash, {
+        from: accounts[0]
+      });
+    } else {
+      await contract.updateHash(idx, resSuitData.data._id, suitHash, {
+        from: accounts[0]
+      });
+    }
 
     window.location.reload();
   };
@@ -231,9 +276,24 @@ export default function Main(props) {
     const resSuitData = await api.UPDATE_CASE(data);
     const suitHash = hash(resSuitData.data);
     const { accounts, contract } = Contract;
-    await contract.createSuit(resSuitData.data._id, suitHash, {
-      from: accounts[0]
-    });
+
+    let idx = null;
+    for (let i = 0; i < suits.length; i++) {
+      if (suits[i].suitId == resSuitData.data._id) {
+        idx = i;
+        break;
+      }
+    }
+
+    if (idx == null) {
+      await contract.createSuit(resSuitData.data._id, suitHash, {
+        from: accounts[0]
+      });
+    } else {
+      await contract.updateHash(idx, resSuitData.data._id, suitHash, {
+        from: accounts[0]
+      });
+    }
 
     window.location.reload();
   };

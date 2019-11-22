@@ -23,10 +23,6 @@ contract SuitList {
     string suitHash
   );
 
-  constructor() public {
-    createSuit('2','Anurag content');
-  }
-
   function createSuit(
     string memory suitId,
     string memory suitHash
