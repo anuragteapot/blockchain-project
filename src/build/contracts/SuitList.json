@@ -2920,14 +2920,61 @@
   },
   "networks": {
     "5777": {
-      "events": {},
+      "events": {
+        "0x9400fe982162066fc0754297726f960164664cd5440c99162f9d70f3c4cfc06f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "suitId",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "suitHash",
+              "type": "string"
+            }
+          ],
+          "name": "SuitCreated",
+          "type": "event",
+          "signature": "0x9400fe982162066fc0754297726f960164664cd5440c99162f9d70f3c4cfc06f"
+        },
+        "0x4dd20d1305b11f3528402ed1053d79c9c311272688098c2a0890c454bb5a0c3b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "suitId",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "suitHash",
+              "type": "string"
+            }
+          ],
+          "name": "SuitCompleted",
+          "type": "event",
+          "signature": "0x4dd20d1305b11f3528402ed1053d79c9c311272688098c2a0890c454bb5a0c3b"
+        }
+      },
       "links": {},
-      "address": "0x9b939846fBC88e3FA73033C856980E2E459e46e3",
-      "transactionHash": "0xd15a25f454335d59e12d636b75554cba82ad25bbccfb501871a6c059166e3528"
+      "address": "0xcc3D1d48B1c344F912AF1DD8AE6ebef3303D494B",
+      "transactionHash": "0x3b3a5a62a25879fed89482b255a8e687b80f1b8b5f37913d7df8d7ce09abf47f"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-11-22T14:11:37.556Z",
+  "updatedAt": "2019-11-22T14:25:25.667Z",
   "devdoc": {
     "methods": {}
   },
