@@ -58,6 +58,18 @@ export default new (class utils {
   }
 
   /**
+   *Description:	Simple method to handle an event
+   *and fire off a function
+   **/
+  fileHandler(file) {
+    return new Promise((resolve, rejects) => {
+      this.fileHash(file, md5, function(x) {
+        resolve(x);
+      });
+    });
+  }
+
+  /**
    *Description: The actual function to calculate the hash
    *Arguments:
    *file:	a file from a file input load event
