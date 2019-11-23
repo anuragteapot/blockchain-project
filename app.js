@@ -7,7 +7,7 @@ const fs = require("fs");
 const { join } = require("path");
 
 const PORT = process.env.PORT || 3344;
-const connectionURI = require("./db/connectionURI");
+const connectionURI = require("./script/connectionURI");
 const logs = require("./helpers/logs");
 const models = join(__dirname, "models");
 const app = express();
