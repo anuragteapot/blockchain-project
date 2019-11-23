@@ -1,4 +1,10 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Tools you need :
+
+1. Node 
+2. Ganache
+3. MetaMask
+4. React.js
+5. Truffle
 
 Go in folder and run : 
 
@@ -8,7 +14,7 @@ Go in folder and run :
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run dev`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
