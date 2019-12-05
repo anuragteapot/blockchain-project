@@ -12,3 +12,4 @@ Tools you need :
     Client side library to Make UI.
 5. Truffle
     To compile and deploy the smart contacts to the blockchain network.
+6. MongoDB for JWT auth
