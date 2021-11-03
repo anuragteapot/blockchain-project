@@ -51,7 +51,7 @@
     "truffle-contract": "^4.0.31",
     "underscore": "^1.9.1",
     "url": "^0.11.0",
-    "validator": "^9.4.1",
+    "validator": "^13.7.0",
     "web3": "^1.2.2"
   },
   "eslintConfig": {
